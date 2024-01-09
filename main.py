@@ -38,7 +38,6 @@ FPS_Selector.pack(pady=10)
 DEFAULT_FPS = 60
 FPS = 0
 
-global AncienFPS_Indication
 AncienFPS_Indication = ttk.Label(root, text="Last Choosen FPS : " + str(AncienFpsFile))
 AncienFPS_Indication.pack(pady=5)
 

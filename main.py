@@ -29,8 +29,7 @@ if AncienFpsFile == '':
     AncienFpsFile = 'None'
 
 
-
-FPS_Text_Indication = ttk.Label(root, text="Choose the amount of FPS you want : ")
+FPS_Text_Indication = ttk.Label(root, text="Choose the amount of FPS you want to be capped : ")
 FPS_Text_Indication.pack()
 
 FPS_Selector = ttk.Spinbox(root, from_=1, to=10000000000000000000000000000, wrap=True)

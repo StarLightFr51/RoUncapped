@@ -11,6 +11,7 @@ Thanks for downloading the source code and upgrade it
 
 # import
 import os
+import glob
 import tkinter
 from tkinter import ttk
 
@@ -18,8 +19,11 @@ root = tkinter.Tk()
 root.title('RoUncapped')
 root.geometry('400x400')
 
-ClientSettingsFolderPath = os.getenv('LOCALAPPDATA') + '\\Roblox\\Versions\\version-48a28da848b7420d\\ClientSettings'
-ClientSettingsFilePath = os.getenv('LOCALAPPDATA') + '\\Roblox\\Versions\\version-48a28da848b7420d\\ClientSettings\\ClientAppSettings.json'
+list_of_files = glob.glob(os.getenv('LOCALAPPDATA') + '/Roblox/Versions/*')
+lastest_file = max(list_of_files, key=os.path.getctime)
+
+ClientSettingsFolderPath = lastest_file + '\\ClientSettings'
+ClientSettingsFilePath = lastest_file + '\\ClientSettings\\ClientAppSettings.json'
 AppDataFolderPath = os.getenv('APPDATA') + '\\' + '.RoUncapped'
 DataFolderPath = AppDataFolderPath + '\\' + 'Data'
 AncienFPSFilePath = DataFolderPath + '\\' + 'AncienFPS.data'
@@ -41,7 +45,9 @@ FPS = 0
 AncienFPS_Indication = ttk.Label(root, text="Last Choosen FPS : " + str(AncienFpsFile))
 AncienFPS_Indication.pack(pady=5)
 
-def Save_FPS():
+
+def save_fps():
+
     FPS = int(FPS_Selector.get())
     file = open(ClientSettingsFilePath, "w+")
     AnicenFPSFile = open(AncienFPSFilePath, "w")
@@ -51,19 +57,18 @@ def Save_FPS():
     elif FPS < 1:
         FPS = 1
 
-
     AnicenFPSFile.write(str(FPS))
     AnicenFPSFile.close()
     file.write("{\n\"DFIntTaskSchedulerTargetFps\" : " + str(FPS) + "\n}")
-    CONFIRMATION_LABEL = ttk.Label(root, text="Your FPS have been successfully saves !")
-    CONFIRMATION_LABEL.pack(pady=5)
+    confirm_label = ttk.Label(root, text="Your FPS have been successfully saves !")
+    confirm_label.pack(pady=5)
 
-    CONFIRMATION_LABEL.after(3000, lambda : CONFIRMATION_LABEL.destroy())
+    confirm_label.after(3000, lambda : confirm_label.destroy())
 
-Selection_Button = ttk.Button(root, text="Save Changes", command=Save_FPS)
+
+Selection_Button = ttk.Button(root, text="Save Changes", command=save_fps)
 Selection_Button.pack(pady=15)
 
-print(ClientSettingsFolderPath)
 if not os.path.exists(ClientSettingsFolderPath):
     os.mkdir(ClientSettingsFolderPath)
 

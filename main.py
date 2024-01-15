@@ -28,6 +28,25 @@ AppDataFolderPath = os.getenv('APPDATA') + '\\' + '.RoUncapped'
 DataFolderPath = AppDataFolderPath + '\\' + 'Data'
 AncienFPSFilePath = DataFolderPath + '\\' + 'AncienFPS.data'
 
+DEFAULT_FPS = 60
+
+if not os.path.exists(ClientSettingsFolderPath):
+    os.mkdir(ClientSettingsFolderPath)
+
+if not os.path.exists(ClientSettingsFilePath):
+    file = open(ClientSettingsFilePath, "w+")
+    file.write("{\n\"DFIntTaskSchedulerTargetFps\" : " + str(DEFAULT_FPS) + "\n")
+
+if not os.path.exists(AppDataFolderPath):
+    os.mkdir(AppDataFolderPath)
+
+if not os.path.exists(DataFolderPath):
+    os.mkdir(DataFolderPath)
+
+if not os.path.exists(AncienFPSFilePath):
+    file = open(AncienFPSFilePath, 'w+')
+    file.close()
+
 AncienFpsFile = open(AncienFPSFilePath, 'r').read()
 if AncienFpsFile == '':
     AncienFpsFile = 'None'
@@ -39,7 +58,6 @@ FPS_Text_Indication.pack()
 FPS_Selector = ttk.Spinbox(root, from_=1, to=10000000000000000000000000000, wrap=True)
 FPS_Selector.pack(pady=10)
 
-DEFAULT_FPS = 60
 FPS = 0
 
 AncienFPS_Indication = ttk.Label(root, text="Last Choosen FPS : " + str(AncienFpsFile))
@@ -68,22 +86,5 @@ def save_fps():
 
 Selection_Button = ttk.Button(root, text="Save Changes", command=save_fps)
 Selection_Button.pack(pady=15)
-
-if not os.path.exists(ClientSettingsFolderPath):
-    os.mkdir(ClientSettingsFolderPath)
-
-if not os.path.exists(ClientSettingsFilePath):
-    file = open(ClientSettingsFilePath, "w+")
-    file.write("{\n\"DFIntTaskSchedulerTargetFps\" : " + str(DEFAULT_FPS) + "\n")
-
-if not os.path.exists(AppDataFolderPath):
-    os.mkdir(AppDataFolderPath)
-
-if not os.path.exists(DataFolderPath):
-    os.mkdir(DataFolderPath)
-
-if not os.path.exists(AncienFPSFilePath):
-    file = open(AncienFPSFilePath, 'w+')
-    file.close()
 
 root.mainloop()

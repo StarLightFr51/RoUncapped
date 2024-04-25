@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 class assets:
     def add_label(self, parent, text: str, font: str, textsize, fonttype: str):
@@ -22,6 +23,7 @@ class assets:
 
             if os.path.exists(self.path):
                 for file in os.listdir(self.path):
+                    print(file)
                     if os.path.exists(f'{self.path}\\{file}\\RobloxPlayerLauncher.exe'):
                         if not os.path.exists(f'{self.path}\\{file}\\ClientSettings'):
                             os.mkdir(f'{self.path}\\{file}\\ClientSettings')
@@ -32,16 +34,22 @@ class assets:
                                 self.f = open(self.path + '\\' + file + '\\ClientSettings\\ClientAppSettings.json', 'w')
                                 self.f.write("{\n\"DFIntTaskSchedulerTargetFps\" : " + self.contents.get() + "\n}")
                                 self.f.close()
+
+                                messagebox.showinfo("Confirmation", f"Your Roblox FPS are now capped at {self.contents.get()}")
                         if not os.path.exists(f'{self.path}\\{file}\\ClientSettings\\ClientAppSettings.json'):
                             self.f = open(self.path + '\\' + file + '\\ClientSettings\\ClientAppSettings.json', 'x')
                             self.f = open(self.path + '\\' + file + '\\ClientSettings\\ClientAppSettings.json', 'w')
                             self.f.write("{\n\"DFIntTaskSchedulerTargetFps\" : " + self.contents.get() + "\n}")
                             self.f.close()
+
+                            messagebox.showinfo("Confirmation", f"Your Roblox FPS are now capped at {self.contents.get()}")
                         else:
                             self.f = open(self.path + '\\' + file + '\\ClientSettings\\ClientAppSettings.json', 'w')
                             self.f.write("{\n\"DFIntTaskSchedulerTargetFps\" : " + self.contents.get() + "\n}")
                             self.f.close()
 
+                            messagebox.showinfo("Confirmation", f"Your Roblox FPS are now capped at {self.contents.get()}")
+
 
         else:
-            pass
+            messagebox.showerror("Error !", "The text field must contain only numbers")
